@@ -1,33 +1,34 @@
 # Importa las clases Turtle y Screen del módulo turtle
 import random
+
 from turtle import Turtle, Screen
 
-
 # Crea un objeto de la clase Screen
-screen=Screen()
+screen = Screen()
 
 # Configura el tamaño de la pantalla a 500 de ancho y 400 de alto
 screen.setup(width=500, height=400)
 
-
-user_bet = screen.textinput(title="make your bet ", prompt="The turtles that are going to compete are of color red, orange, yellow, green, blue, purple. \n\n Which turtle will win the race? Enter a color: ")
-
-# print(user_bet)
-
 # Crea una lista con los colores de las tortugas
-colors=["red", "orange", "yellow", "green", "blue", "purple"]
+colors = ["red", "orange", "yellow", "green", "blue", "purple"]
 
-list_of_turtles=[]
+# Solicita al usuario que elija el color de la tortuga en la que apuesta
+user_bet = screen.textinput(title="Make your bet", prompt="The turtles that are going to compete are of color red, orange, yellow, green, blue, purple. \n\nWhich turtle will win the race? Enter a color: ")
 
-# Crea una variable para guardar la posición vertical inicial de la primera tortuga
-y=-150
+# Verifica que la elección del usuario esté en la lista de colores
+while user_bet not in colors:    
+    user_bet = screen.textinput(title="Make your bet", prompt="The turtles that are going to compete are of color red, orange, yellow, green, blue, purple. \n\nWhich turtle will win the race? Enter a color: ")
 
+# Lista para almacenar objetos Turtle
+list_of_turtles = []
 
-# Crea un bucle que se repite tantas veces como elementos hay en la lista de colores
-for i in range(0, len(colors)):
-    
+# Posición vertical inicial de la primera tortuga
+y = -150
+
+# Bucle para crear tortugas de diferentes colores
+for i in range(len(colors)):
     # Crea un objeto de la clase Turtle
-    turtle=Turtle()
+    turtle = Turtle()
     
     # Cambia la forma de la tortuga a una tortuga
     turtle.shape("turtle")
@@ -40,58 +41,48 @@ for i in range(0, len(colors)):
     
     # Cambia el color de la tortuga al color correspondiente de la lista
     turtle.color(colors[i])
-        
-    list_of_turtles.append(turtle)
     
-    # print(list_of_turtles)
+    list_of_turtles.append(turtle)
     
     # Aumenta la posición vertical en 60 unidades para la siguiente tortuga
     y += 60
+
+# Variable para verificar si la carrera ha terminado
+finish = False
+
+# Bucle principal para simular la carrera
+while not finish:
     
-    if i == 5:
+    for i in range(len(list_of_turtles)):
         
+        # Velocidad aleatoria para cada tortuga
+        velocidad = random.randint(1, 8)
         
-        
-        finish=False
-        
-        while finish==False:
+        # Tortugas corriendo hacia adelante a velocidades aleatorias
+        list_of_turtles[i].forward(velocidad)
+
+        # Verifica si alguna tortuga ha llegado a la meta
+        if list_of_turtles[i].xcor() > 235:
             
-            #tortugas corriendo hacia al frente a velocidades aleatorias
-            for i in range(0, len(list_of_turtles)):
-                
-                velocidad=random.randrange(2,6)
-                
-                               
-                list_of_turtles[i].forward(velocidad)
-                
-
-                if list_of_turtles[i].xcor()>235:
-                    print("finish")
-                    
-                    finish=True
-                    
-                    
-                    print(f"the winner turtle is {list_of_turtles[i].pencolor()}")
-                    
-                    if user_bet==list_of_turtles[i].pencolor():
-                        print("Excelent you won ")
-                    
-                    else:
-                        print("sorry you lost")
-                                
-                    break
-                
-               
+            print("Finish")
             
-    
-    
+            finish = True
+            
+            print(f"The winner turtle is {list_of_turtles[i].pencolor()}")
+            
+            # Verifica si la apuesta del usuario coincide con la tortuga ganadora
+            if user_bet == list_of_turtles[i].pencolor():
+                
+                print("Excellent, you won!")
+                
+            else:
+                
+                print("Sorry, you lost.")
+                
+            break
 
-    
-
-
-
-
-# Permite que el programa continue corriendo hasta que hagamos click en la pantalla , debemos crear un objeto de la clase Screen() para usar el metodo exitonclick()
-# Debe ir al final de nuestro codigo
-# Cierra la ventana al hacer click en la pantalla
+# Permite que el programa continúe corriendo hasta que hagamos clic en la pantalla
+# Debemos crear un objeto de la clase Screen() para usar el método exitonclick()
+# Debe ir al final de nuestro código
+# Cierra la ventana al hacer clic en la pantalla
 screen.exitonclick()
