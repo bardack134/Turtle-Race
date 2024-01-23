@@ -1,5 +1,7 @@
 # Importa las clases Turtle y Screen del módulo turtle
+import random
 from turtle import Turtle, Screen
+
 
 # Crea un objeto de la clase Screen
 screen=Screen()
@@ -8,7 +10,7 @@ screen=Screen()
 screen.setup(width=500, height=400)
 
 
-# user_bet = screen.textinput(title="make your bet ", prompt="The turtles that are going to compete are of color red, orange, yellow, green, blue, purple. \n\n Which turtle will win the race? Enter a color: ")
+user_bet = screen.textinput(title="make your bet ", prompt="The turtles that are going to compete are of color red, orange, yellow, green, blue, purple. \n\n Which turtle will win the race? Enter a color: ")
 
 # print(user_bet)
 
@@ -47,16 +49,39 @@ for i in range(0, len(colors)):
     y += 60
     
     if i == 5:
-        print(len(list_of_turtles))
+        
+        
         
         finish=False
         
         while finish==False:
             
-            list_of_turtles[0].forward(100)
-            list_of_turtles[1].forward(100)
-            list_of_turtles[2].forward(100)
-            list_of_turtles[3].forward(100)
+            #tortugas corriendo hacia al frente a velocidades aleatorias
+            for i in range(0, len(list_of_turtles)):
+                
+                velocidad=random.randrange(2,6)
+                
+                               
+                list_of_turtles[i].forward(velocidad)
+                
+
+                if list_of_turtles[i].xcor()>235:
+                    print("finish")
+                    
+                    finish=True
+                    
+                    
+                    print(f"the winner turtle is {list_of_turtles[i].pencolor()}")
+                    
+                    if user_bet==list_of_turtles[i].pencolor():
+                        print("Excelent you won ")
+                    
+                    else:
+                        print("sorry you lost")
+                                
+                    break
+                
+               
             
     
     
